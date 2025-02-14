@@ -29,7 +29,7 @@ char *strncpy_m(const char *string, size_t n)
 
 /*
 ** join_m joins an array of strings separated by a delimiter
-** Strings strings - structure that includes array of strings
+** Strings strings - structure that stores an array of strings
 ** const char *delimiter - delimiter string which joins each string
 ** return the joined string
 */
