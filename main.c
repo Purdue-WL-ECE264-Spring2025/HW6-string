@@ -161,7 +161,7 @@ static int test13(void) {
 static int test14(void) {
     mu_start();
     /*------------------*/
-    char input_strings[1][5] = {"word"};
+    char *input_strings[1] = {"word"};
     Strings input = { .strings = input_strings, .num_strings = 1 };
     char *str = join_m(input, "noadd");
     mu_check_strings_equal(str, "word");
@@ -174,7 +174,7 @@ static int test14(void) {
 static int test15(void) {
     mu_start();
     /*------------------*/
-    char input_strings[1][2] = {"a", "b", "c", "d", "e", "f"};
+    char *input_strings[6] = {"a", "b", "c", "d", "e", "f"};
     Strings input = { .strings = input_strings, .num_strings = 6 };
     char *str = join_m(input, "");
     mu_check_strings_equal(str, "abcdef");
@@ -187,7 +187,7 @@ static int test15(void) {
 static int test16(void) {
     mu_start();
     /*------------------*/
-    char input_strings[1][2] = {"a", "b", "c", "d", "e", "f"};
+    char *input_strings[6] = {"a", "b", "c", "d", "e", "f"};
     Strings input = { .strings = input_strings, .num_strings = 6 };
     char *str = join_m(input, "x");
     mu_check_strings_equal(str, "axbxcxdxexf");
@@ -200,7 +200,7 @@ static int test16(void) {
 static int test17(void) {
     mu_start();
     /*------------------*/
-    char input_strings[1][2] = {"Hello", "Hello", "Hello", "is", "there", "anybody", "in", "there", "?"};
+    char *input_strings[9] = {"Hello", "Hello", "Hello", "is", "there", "anybody", "in", "there", "?"};
     Strings input = { .strings = input_strings, .num_strings = 9 };
     char *str = join_m(input, " ");
     mu_check_strings_equal(str, "Hello Hello Hello is there anybody in there ?");
