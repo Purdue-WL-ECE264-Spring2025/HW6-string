@@ -10,10 +10,12 @@
 ** strlen_m calculates the length of a string
 ** const char *string - string to calculate length of
 ** return the size of the string
+**
+** note: you can assume string is not NULL
 */
 size_t strlen_m(const char *string)
 {
-    return 0;
+
 }
 
 /*
@@ -21,21 +23,27 @@ size_t strlen_m(const char *string)
 ** const char *string - string to copy
 ** size_t n - number of characters to copy (not including null character)
 ** return a copy of first n characters of string
+**
+** note: you can assume string is not NULL
+** hint: you will need to malloc a size n + 1 string to accomodate the null character
 */
 char *strncpy_m(const char *string, size_t n)
 {
-    return NULL;
+
 }
 
 /*
 ** join_m joins an array of strings separated by a delimiter
 ** Strings strings - structure that stores an array of strings
 ** const char *delimiter - delimiter string which joins each string
-** return the joined string
+** return the string created by joining all strings with the delimiter
+**
+** note: you can assume delimiter is not NULL
+** hint: return NULL if strings.num_strings is 0
 */
 char *join_m(Strings strings, const char *delimiter)
 {
-    return NULL;
+
 }
 
 /*
@@ -44,6 +52,7 @@ char *join_m(Strings strings, const char *delimiter)
 */
 void free_strings(Strings strings)
 {
+
 }
 
 /*
@@ -51,12 +60,21 @@ void free_strings(Strings strings)
 ** const char *string - string that is searched for the pattern
 ** const char *pattern - pattern which string should be split
 ** return a String structure which contains an array of each string
+**
+** note: you may assume string and pattern are not NULL
+** hint 1: TA solution uses strlen_m, ststr_m, and strncpy_m
+** hint 2: first calculate how many strings are needed, which is: 
+**         (number of times the delimiter appears + 1)
+** hint 3: when trying to store a substring, think about how the length of 
+**         that substring might be calculated in terms of pointer arithmetic
+**         - what is the outcome of adding or subtract pointers?
+** hint 3.5: strstr_m will return a pointer to the first character of the next occurence 
+**           or NULL if not found
+**          
 */
 Strings split_m(const char *string, const char *pattern)
 {
-    Strings result = {.num_strings = 0, .strings = NULL};
-
-    return result;
+    Strings result = { .num_strings = 0, .strings = NULL };
 }
 
 /*
@@ -64,11 +82,14 @@ Strings split_m(const char *string, const char *pattern)
 ** const char *string - string to search through
 ** const char *pattern - pattern to search for in string
 ** const char *replacement - replacement string for each occurence of pattern in string
-** return a
+** return a string in which every occurence of pattern is replaced replacement
+**
+** note: you may assume string, pattern, and replacement are all not NULL
+** hint: there are two main ways of implementing this function, one involves many lines, one involves one
 */
 char *find_and_replace_all_m(const char *string, const char *pattern, const char *replacement)
 {
-    return NULL;
+
 }
 
 /*
