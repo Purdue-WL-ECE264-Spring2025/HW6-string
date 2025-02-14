@@ -9,7 +9,7 @@ Late Due Date: 03/05/2025
 - Working with structs to encapsulate data.
 
 ## Overview
-In this assignment, you will implement a series of functions that are very similar to ones found in C's standard string library, `<string.h>`. Note that `<string.h>` is not allowed to be used for this assignment). The primary goal is to give hands on practice with `malloc`, working with `structs`, and understanding strings and pointers on a deeper level.
+In this assignment, you will implement a series of functions that are very similar to ones found in C's standard string library, `<string.h>`. Note that `<string.h>` is not allowed to be used for this assignment. The primary goal is to give hands on practice with `malloc`, working with `structs`, and understanding strings and pointers on a deeper level.
 
 ## Quick Note On const Keyword
 The `const` keyword makes C variables constant, meaning that their data cannot be changed after initialization. When used with pointers, `const` can become a bit more confusing. A `const char * ch_ptr` means that the pointer _can_ change, but the character _cannot_. Also note that `const char` and `char const` are the same thing. However, a `char * const ch_ptr` now makes the character `*ch_ptr` non-constant, and the pointer `ch_ptr` constant. What if we want both the pointer and the character the pointer points to to not change? Use a `char const * const ch_ptr`!
@@ -25,7 +25,7 @@ typedef struct
 } Strings;
 ```
 struct Strings stores a 2D array of strings `char **strings` and a integer which stores the number of strings `int num_strings`
-> You will need to malloc space for strings itself, and each string inside of strings
+> You will need to malloc space for strings itself, and each string inside of strings.
 
 > If you are unfamiliar with the `typedef` keyword, it tells C to let `struct Strings` to be rewritten simply as `Strings`
 
