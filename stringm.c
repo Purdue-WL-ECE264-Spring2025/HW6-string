@@ -64,7 +64,7 @@ void free_strings(Strings strings)
 ** note: you may assume string and pattern are not NULL
 ** hint 1: TA solution uses strlen_m, ststr_m, and strncpy_m
 ** hint 2: first calculate how many strings are needed, which is: 
-**         (number of times the delimiter appears + 1)
+**         (the number of times the delimiter appears + 1)
 ** hint 3: when trying to store a substring, think about how the length of 
 **         that substring might be calculated in terms of pointer arithmetic
 **         - what is the outcome of adding or subtract pointers?
