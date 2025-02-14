@@ -54,8 +54,16 @@ char *join_m(Strings strings, const char *delimiter) {
 ** const char *replacement - replacement string for each occurence of pattern in string
 ** return a 
 */
-char *find_and_replace_all(const char *string, const char *pattern, const char *replacement) {
+char *find_and_replace_m(const char *string, const char *pattern, const char *replacement) {
     return NULL;
+}
+
+/*
+** free_strings frees all allocated elements in strings
+** String strings - free each string in strings.strings and strings.strings itself
+*/
+void free_strings(Strings strings) {
+
 }
 
 /*

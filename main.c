@@ -6,35 +6,40 @@
 #include <string.h>
 #include "stringm.h"
 #include "miniunit.h"
+
+
 /*
 ** Below are the test cases, feel free to ignore them
 ** Note that the argument to mu_check() is the expected result for that test
 */
-static int test1(void); 
-static int test2(void);
-static int test3(void);
-static int test4(void);
+
 /*
 ** strlen_m test cases
 */
 static int test1(void) {
     mu_start();
+    /*------------------*/
     size_t size = strlen_m("");
     mu_check(size == 0);
+    /*------------------*/
     mu_end();
 }
 
 static int test2(void) {
     mu_start();
+    /*------------------*/
     size_t size = strlen_m("a");
     mu_check(size == 1);
+    /*------------------*/
     mu_end();
 }
 
 static int test3(void) {
     mu_start();
+    /*------------------*/
     size_t size = strlen_m("abcdefghijklmnopqrstuvwxyz");
     mu_check(size == 26);
+    /*------------------*/
     mu_end();
 }
 
@@ -43,40 +48,249 @@ static int test3(void) {
 */
 static int test4(void) {
     mu_start();
+    /*------------------*/
     char *str = strncpy_m("", 0);
     mu_check_strings_equal(str, "");
     free(str);
+    /*------------------*/
     mu_end();
 }
+
+static int test5(void) {
+    mu_start();
+    /*------------------*/
+    char *str = strncpy_m("a", 0);
+    mu_check_strings_equal(str, "");
+    free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test6(void) {
+    mu_start();
+    /*------------------*/
+    char *str = strncpy_m("abcdefed", 5);
+    mu_check_strings_equal(str, "abcde");
+    free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test7(void) {
+    mu_start();
+    /*------------------*/
+    char *str = strncpy_m("aaaaaaaaaaaaaaaaaa", 18);
+    mu_check_strings_equal(str, "aaaaaaaaaaaaaaaaaa");
+    free(str);
+    /*------------------*/
+    mu_end();
+}
+
 /*
-strncpy_m (str will not be NULL and n <= strlen(str); need to add null terminator)
-1. "", 0 - ""
-2. "a", 0 - ""
-3. "abcdefed", 5 - "abcde"
-4. "aaaaaaaaaaaaaaaaaa", 18 - "aaaaaaaaaaaaaaaaaa"
-
-split_m (str and pattern will not be NULL)
-1. "", "" - { {""}, 1 }
-2. "", "," - { {""}, 1 }
-3. ",", "" - { {","}, 1 }
-4. ",", "," - { {"",""}, 2}
-5. "well,wall,,will,wull,,,woll,", "," - { {"well", "wall", "", "will", "wull", "", "", "woll", ""}, 9}
-
-join_m (delimiter is not NULL, if strings.num_strings < 2 => return NULL (num == 0) or strings[0] (num == 1))
-1. {{}, 0}, "abc" - NULL
-2. {{"word"}, 1}, "noadd" - "word"
-3. {{"a", "b", "c", "d", "e", "f"}, 6}, "" - "abcdef"
-4. {{"a", "b", "c", "d", "e", "f"}, 6}, "x" - "axbxcxdxexf"
-5. {{"Hello", "Hello", "Hello", "is", "there", "anybody", "in", "there", "?"}, 9}, " " = "Hello Hello Hello is there anybody in there ?"
-
-find_and_replace_all_m(no string will be NULL) # Change this name to include the _m in the header file please
-1. "", "", "" - ""
-2. "abc", "z", "y" - "abc"
-3. "aaa", "a", "" - ""
-4. "aaa", "a", "b" - "bbb"
-5. "aaa", "a", "xyz" - "xyzxyzxyz"
-6. "mississippi", "issip", "gotcha?" - "missgotcha?pi"
+** split_m test cases
 */
+static int test8(void) {
+    mu_start();
+    /*------------------*/
+    Strings result = split_m("", "");
+    mu_check_strings_equal(result.strings[0], "");
+    mu_check(result.num_strings == 1);
+    /*------------------*/
+    mu_end();
+}
+
+static int test9(void) {
+    mu_start();
+    /*------------------*/
+    Strings result = split_m("", ",");
+    mu_check_strings_equal(result.strings[0], "");
+    mu_check(result.num_strings == 1);
+    /*------------------*/
+    mu_end();
+}
+
+static int test10(void) {
+    mu_start();
+    /*------------------*/
+    Strings result = split_m(",", "");
+    mu_check_strings_equal(result.strings[0], ",");
+    mu_check(result.num_strings == 1);
+    /*------------------*/
+    mu_end();
+}
+
+static int test11(void) {
+    mu_start();
+    /*------------------*/
+    Strings result = split_m("", ",");
+    mu_check_strings_equal(result.strings[0], "");
+    mu_check(result.num_strings == 1);
+    /*------------------*/
+    mu_end();
+}
+
+static int test12(void) {
+    mu_start();
+    /*------------------*/
+    char expected[9][5] = {"well", "wall", "", "will", "wull", "", "", "woll", ""};
+    Strings result = split_m("well,wall,,will,wull,,,woll,", ",");
+    mu_check(result.num_strings == 9);
+    for (int i = 0; i < 9; i++) {
+        mu_check_strings_equal(result.strings[i], expected[i]);
+    }
+    /*------------------*/
+    mu_end();
+}
+
+
+/*
+* join_m test cases
+*/
+static int test13(void) {
+    mu_start();
+    /*------------------*/
+    Strings input = { .strings = NULL, .num_strings = 0 };
+    char *str = join_m(input, "abc");
+    mu_check(str == NULL);
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test14(void) {
+    mu_start();
+    /*------------------*/
+    char input_strings[1][5] = {"word"};
+    Strings input = { .strings = input_strings, .num_strings = 1 };
+    char *str = join_m(input, "noadd");
+    mu_check_strings_equal(str, "word");
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test15(void) {
+    mu_start();
+    /*------------------*/
+    char input_strings[1][2] = {"a", "b", "c", "d", "e", "f"};
+    Strings input = { .strings = input_strings, .num_strings = 6 };
+    char *str = join_m(input, "");
+    mu_check_strings_equal(str, "abcdef");
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test16(void) {
+    mu_start();
+    /*------------------*/
+    char input_strings[1][2] = {"a", "b", "c", "d", "e", "f"};
+    Strings input = { .strings = input_strings, .num_strings = 6 };
+    char *str = join_m(input, "x");
+    mu_check_strings_equal(str, "axbxcxdxexf");
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test17(void) {
+    mu_start();
+    /*------------------*/
+    char input_strings[1][2] = {"Hello", "Hello", "Hello", "is", "there", "anybody", "in", "there", "?"};
+    Strings input = { .strings = input_strings, .num_strings = 9 };
+    char *str = join_m(input, " ");
+    mu_check_strings_equal(str, "Hello Hello Hello is there anybody in there ?");
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+/*
+* find_and_replace_m test cases
+*/
+static int test18(void) {
+    mu_start();
+    /*------------------*/
+    char *str = find_and_replace_m("", "", "");
+    mu_check_strings_equal(str, "");
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test19(void) {
+    mu_start();
+    /*------------------*/
+    char *str = find_and_replace_m("abc", "z", "y");
+    mu_check_strings_equal(str, "abc");
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test20(void) {
+    mu_start();
+    /*------------------*/
+    char *str = find_and_replace_m("aaa", "a", "");
+    mu_check_strings_equal(str, "");
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test21(void) {
+    mu_start();
+    /*------------------*/
+    char *str = find_and_replace_m("aaa", "a", "b");
+    mu_check_strings_equal(str, "bbb");
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test22(void) {
+    mu_start();
+    /*------------------*/
+    char *str = find_and_replace_m("aaa", "a", "xyz");
+    mu_check_strings_equal(str, "xyzxyzxyz");
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test23(void) {
+    mu_start();
+    /*------------------*/
+    char *str = find_and_replace_m("aaa", "a", "xyz");
+    mu_check_strings_equal(str, "xyzxyzxyz");
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+static int test24(void) {
+    mu_start();
+    /*------------------*/
+    char *str = find_and_replace_m("mississippi", "issip", "gotcha?");
+    mu_check_strings_equal(str, "missgotcha?pi");
+    if (str != NULL)
+        free(str);
+    /*------------------*/
+    mu_end();
+}
+
+
 int main(int argc, char **argv) {
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <test_num>", argv[0]);
@@ -95,6 +309,26 @@ int main(int argc, char **argv) {
                             test2,
                             test3,
                             test4,
+                            test5,
+                            test6,
+                            test7,
+                            test8,
+                            test9,
+                            test10,
+                            test11,
+                            test12,
+                            test13,
+                            test14,
+                            test15,
+                            test16,
+                            test17,
+                            test18,
+                            test19,
+                            test20,
+                            test21,
+                            test22,
+                            test23,
+                            test24,
                             };
 
     const int num_tests = sizeof(mu_test_functions) / sizeof(*mu_test_functions);
