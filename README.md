@@ -57,7 +57,7 @@ struct Strings stores a 2D array of strings `char **strings` and a integer which
 **Description**: split_m splits a string based on a string pattern. The pattern should not appear in the output string. Every occurence of pattern must be removed and the string split at that point. Looking at the test cases in `main.c` may help your understanding of how this function should work. See the hints above the function written.
 
 ### 6. find_and_replace_all_m
-**Function**" `char *find_and_replace_all_m(const char *string, const char *pattern, const char *replacement)`
+**Function**: `char *find_and_replace_all_m(const char *string, const char *pattern, const char *replacement)`
 
 **Description**: find_and_replace_all_m searches through a string, and for every occurence of pattern will replace it with the replacement string. One way this might be done is to first split at the pattern, then fill in with the replacement between each split.
 
