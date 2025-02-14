@@ -85,7 +85,7 @@ Strings split_m(const char *string, const char *pattern)
 ** return a string in which every occurence of pattern is replaced replacement
 **
 ** note: you may assume string, pattern, and replacement are all not NULL
-** hint: there are two main ways of implementing this function, one involves many lines, one involves one
+** hint: there are two main ways of implementing this function, one involves many lines, one involves four
 */
 char *find_and_replace_all_m(const char *string, const char *pattern, const char *replacement)
 {
