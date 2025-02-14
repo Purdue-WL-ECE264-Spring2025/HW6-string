@@ -10,25 +10,28 @@
 ** Below are the test cases, feel free to ignore them
 ** Note that the argument to mu_check() is the expected result for that test
 */
-
+static int test1(void); 
+static int test2(void);
+static int test3(void);
+static int test4(void);
 /*
 ** strlen_m test cases
 */
-int test1() {
+static int test1(void) {
     mu_start();
     size_t size = strlen_m("");
     mu_check(size == 0);
     mu_end();
 }
 
-int test2() {
+static int test2(void) {
     mu_start();
     size_t size = strlen_m("a");
     mu_check(size == 1);
     mu_end();
 }
 
-int test3() {
+static int test3(void) {
     mu_start();
     size_t size = strlen_m("abcdefghijklmnopqrstuvwxyz");
     mu_check(size == 26);
@@ -38,7 +41,7 @@ int test3() {
 /*
 ** strncpy_m test cases
 */
-int test4() {
+static int test4(void) {
     mu_start();
     char *str = strncpy_m("", 0);
     mu_check_strings_equal(str, "");
@@ -86,11 +89,12 @@ int main(int argc, char **argv) {
         fprintf(stderr, "Error, invalid test number. Must be an integer and non-zero.\n");
     }
     // define test functions
-    int (*mu_test_functions[])() = 
+    int (*mu_test_functions[])(void) = 
                             { 
                             test1, 
                             test2,
                             test3,
+                            test4,
                             };
 
     const int num_tests = sizeof(mu_test_functions) / sizeof(*mu_test_functions);

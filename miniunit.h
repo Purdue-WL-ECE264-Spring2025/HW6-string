@@ -28,7 +28,7 @@
 			if(line == 0) { \
 				printf("%stest_%d PASSED%s\n", "\x1b[32m", (int)testnum, "\x1b[0m"); \
 			} else { \
-				printf("%s%s FAILED%s\n", "\x1b[31m", (int)testnum, "\x1b[0m"); \
+				printf("%stest_%d FAILED%s\n", "\x1b[31m", (int)testnum, "\x1b[0m"); \
 			} \
 		} while(false)
 

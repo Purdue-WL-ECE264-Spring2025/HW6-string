@@ -22,7 +22,7 @@ size_t strlen_m(const char *string) {
 ** return a copy of first n characters of string
 */
 char *strncpy_m(const char *string, size_t n) {
-
+    return NULL;
 }
 
 /*
@@ -32,7 +32,9 @@ char *strncpy_m(const char *string, size_t n) {
 ** return a String structure which contains an array of each string
 */
 Strings split_m(const char *string, const char *pattern) {
+    Strings result = { .num_strings = 0, .strings = NULL };
 
+    return result;
 }
 
 /*
@@ -42,7 +44,7 @@ Strings split_m(const char *string, const char *pattern) {
 ** return the joined string
 */
 char *join_m(Strings strings, const char *delimiter) {
-
+    return NULL;
 }
 
 /*
@@ -53,7 +55,7 @@ char *join_m(Strings strings, const char *delimiter) {
 ** return a 
 */
 char *find_and_replace_all(const char *string, const char *pattern, const char *replacement) {
-
+    return NULL;
 }
 
 /*

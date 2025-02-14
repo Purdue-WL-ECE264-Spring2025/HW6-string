@@ -29,3 +29,4 @@ leak: str
 
 clean: # remove all machine generated files
 	rm -f stringm *.o
+	
