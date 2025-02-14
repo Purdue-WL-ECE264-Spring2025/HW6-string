@@ -1,4 +1,4 @@
-/* 
+/*
 ** -----------------------------------------------------------------
 ** IMPORTANT NOTE: For this assignment, you are not allowed to use
 ** string.h or any header file other than what is defined below
@@ -6,12 +6,13 @@
 */
 #include "stringm.h"
 
-/* 
+/*
 ** strlen_m calculates the length of a string
 ** const char *string - string to calculate length of
 ** return the size of the string
 */
-size_t strlen_m(const char *string) {
+size_t strlen_m(const char *string)
+{
     return 0;
 }
 
@@ -21,20 +22,9 @@ size_t strlen_m(const char *string) {
 ** size_t n - number of characters to copy (not including null character)
 ** return a copy of first n characters of string
 */
-char *strncpy_m(const char *string, size_t n) {
+char *strncpy_m(const char *string, size_t n)
+{
     return NULL;
-}
-
-/*
-** split_m splits a string at any occurence of pattern
-** const char *string - string that is searched for the pattern
-** const char *pattern - pattern which string should be split
-** return a String structure which contains an array of each string
-*/
-Strings split_m(const char *string, const char *pattern) {
-    Strings result = { .num_strings = 0, .strings = NULL };
-
-    return result;
 }
 
 /*
@@ -43,18 +33,8 @@ Strings split_m(const char *string, const char *pattern) {
 ** const char *delimiter - delimiter string which joins each string
 ** return the joined string
 */
-char *join_m(Strings strings, const char *delimiter) {
-    return NULL;
-}
-
-/*
-** find_and_replace_all finds each occurence of pattern in string and replaces it
-** const char *string - string to search through
-** const char *pattern - pattern to search for in string
-** const char *replacement - replacement string for each occurence of pattern in string
-** return a 
-*/
-char *find_and_replace_m(const char *string, const char *pattern, const char *replacement) {
+char *join_m(Strings strings, const char *delimiter)
+{
     return NULL;
 }
 
@@ -62,12 +42,39 @@ char *find_and_replace_m(const char *string, const char *pattern, const char *re
 ** free_strings frees all allocated elements in strings
 ** String strings - free each string in strings.strings and strings.strings itself
 */
-void free_strings(Strings strings) {
-
+void free_strings(Strings strings)
+{
 }
 
 /*
-** this function is implemented for you to use -- do not modify
+** split_m splits a string at any occurence of pattern
+** const char *string - string that is searched for the pattern
+** const char *pattern - pattern which string should be split
+** return a String structure which contains an array of each string
+*/
+Strings split_m(const char *string, const char *pattern)
+{
+    Strings result = {.num_strings = 0, .strings = NULL};
+
+    return result;
+}
+
+/*
+** find_and_replace_all finds each occurence of pattern in string and replaces it
+** const char *string - string to search through
+** const char *pattern - pattern to search for in string
+** const char *replacement - replacement string for each occurence of pattern in string
+** return a
+*/
+char *find_and_replace_all_m(const char *string, const char *pattern, const char *replacement)
+{
+    return NULL;
+}
+
+/*
+** The strstr function is implemented for you to use -- DO NOT MODIFY
+** If you are curious about the algorithm used, look up the Knuth-Morris-Pratt (KMP)
+** algorithm that can find a substring inside another string 'blisteringly fast'
 */
 const char *strstr_m(const char *haystack, const char *needle)
 {
@@ -101,7 +108,7 @@ const char *strstr_m(const char *haystack, const char *needle)
             r++;
         }
         else if (l)
-            l = lps_arr[l-1];
+            l = lps_arr[l - 1];
         else
         {
             lps_arr[r] = 0;
@@ -113,9 +120,8 @@ const char *strstr_m(const char *haystack, const char *needle)
             success = true;
             break;
         }
-            
     }
-    
+
     free(lps_arr);
     free(lps_str);
     if (success)
