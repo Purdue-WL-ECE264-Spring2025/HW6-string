@@ -62,7 +62,7 @@ void free_strings(Strings strings)
 ** return a String structure which contains an array of each string
 **
 ** note: you may assume string and pattern are not NULL
-** hint 1: TA solution uses strlen_m, ststr_m, and strncpy_m
+** hint 1: TA solution uses strlen_m, strstr_m, and strncpy_m
 ** hint 2: first calculate how many strings are needed, which is: 
 **         (number of times the delimiter appears + 1)
 ** hint 3: when trying to store a substring, think about how the length of 
@@ -78,10 +78,10 @@ Strings split_m(const char *string, const char *pattern)
 }
 
 /*
-** find_and_replace_all finds each occurence of pattern in string and replaces it
+** find_and_replace_all_m finds each occurence of the pattern in the string and replaces it
 ** const char *string - string to search through
-** const char *pattern - pattern to search for in string
-** const char *replacement - replacement string for each occurence of pattern in string
+** const char *pattern - pattern to search for in the string
+** const char *replacement - replacement string for each occurence of the pattern in the string
 ** return a string in which every occurence of pattern is replaced replacement
 **
 ** note: you may assume string, pattern, and replacement are all not NULL
@@ -95,7 +95,7 @@ char *find_and_replace_all_m(const char *string, const char *pattern, const char
 /*
 ** The strstr function is implemented for you to use -- DO NOT MODIFY
 ** If you are curious about the algorithm used, look up the Knuth-Morris-Pratt (KMP)
-** algorithm that can find a substring inside another string 'blisteringly fast'
+** algorithm that can find a substring inside another string 'blazingly fast'
 */
 const char *strstr_m(const char *haystack, const char *needle)
 {
