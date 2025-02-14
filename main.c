@@ -1,202 +1,110 @@
-// ***
-// *** DO NOT modify this file
-// ***
-
+/*
+** DO NOT MODIFY THIS FILE
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "stringm.h"
+#include "miniunit.h"
+/*
+** Below are the test cases, feel free to ignore them
+** Note that the argument to mu_check() is the expected result for that test
+*/
 
-int main(int argc, char **argv) {
-    if (argc != 3) {
-        fprintf(stderr, "Usage: %s <input_file> <type>\n", argv[0]);
-        return EXIT_FAILURE;
-    }
+/*
+** strlen_m test cases
+*/
+int test1() {
+    mu_start();
+    size_t size = strlen_m("");
+    mu_check(size == 0);
+    mu_end();
+}
 
-    if (strcmp(argv[2], "copy") == 0) {
-        char * str = read_string_from_file(argv[1]);
+int test2() {
+    mu_start();
+    size_t size = strlen_m("a");
+    mu_check(size == 1);
+    mu_end();
+}
 
-        if (str == NULL) {
-            fprintf(stderr, "Error reading file\n");
-            return EXIT_FAILURE;
-        }
-
-        char * new_str = copy_string(str);
-        printf("%s", new_str);
-        free(new_str);
-        free(str);
-    }
-    else if (strcmp(argv[2], "join") == 0) {
-        const char* const* strings;
-        const char* separator;
-        size_t count;
-
-        if (read_strings_from_file(argv[1], &strings, &count, &separator) == 0) {
-            char* joined_string = join_strings(strings, count, separator);
-            if (joined_string) {
-                printf("%s", joined_string);
-                free(joined_string);
-            }
-            free_strings(strings, count, separator);
-        } else {
-            printf("Error reading file\n");
-            return EXIT_FAILURE;
-        }
-    }
-    else if (strcmp(argv[2], "split") == 0) {
-        char * str = read_string_from_file(argv[1]);
-
-        if (str == NULL) {
-            fprintf(stderr, "Error reading file\n");
-            return EXIT_FAILURE;
-        }
-
-        Strings result = split_string(str, ',');
-        if (result.strings) {
-            for (size_t i = 0; i < result.num_strings; i++) {
-                printf("%s\n", result.strings[i]);
-                free(result.strings[i]);
-            }
-            free(result.strings);
-        }
-    }
-    else {
-        fprintf(stderr, "Invalid argument\n");
-        return EXIT_FAILURE;
-    }
-    return EXIT_SUCCESS;
+int test3() {
+    mu_start();
+    size_t size = strlen_m("abcdefghijklmnopqrstuvwxyz");
+    mu_check(size == 26);
+    mu_end();
 }
 
 /*
-* String functions used by main (Do NOT MODIFY)
+** strncpy_m test cases
 */
-static char* read_string_from_file(const char* filename) {
-    FILE* file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("Error opening file\n");
-        return NULL;
-    }
-
-    // Get file size
-    fseek(file, 0, SEEK_END);
-    long file_size = ftell(file);
-    rewind(file);
-
-    // Allocate memory for the string
-    char* str = malloc(file_size + 1);
-    if (str == NULL) {
-        printf("Memory allocation failed\n");
-        fclose(file);
-        return NULL;
-    }
-
-    // Read entire file
-    size_t bytes_read = fread(str, 1, file_size, file);
-    str[bytes_read] = '\0';
-
-    fclose(file);
-    return str;
+int test4() {
+    mu_start();
+    char *str = strncpy_m("", 0);
+    mu_check_strings_equal(str, "");
+    free(str);
+    mu_end();
 }
+/*
+strncpy_m (str will not be NULL and n <= strlen(str); need to add null terminator)
+1. "", 0 - ""
+2. "a", 0 - ""
+3. "abcdefed", 5 - "abcde"
+4. "aaaaaaaaaaaaaaaaaa", 18 - "aaaaaaaaaaaaaaaaaa"
 
-static int read_strings_from_file(const char* filename, const char* const** strings, size_t* count, const char** separator) {
-    FILE* file = fopen(filename, "r");
-    if (file == NULL) {
-        return -1;
+split_m (str and pattern will not be NULL)
+1. "", "" - { {""}, 1 }
+2. "", "," - { {""}, 1 }
+3. ",", "" - { {","}, 1 }
+4. ",", "," - { {"",""}, 2}
+5. "well,wall,,will,wull,,,woll,", "," - { {"well", "wall", "", "will", "wull", "", "", "woll", ""}, 9}
+
+join_m (delimiter is not NULL, if strings.num_strings < 2 => return NULL (num == 0) or strings[0] (num == 1))
+1. {{}, 0}, "abc" - NULL
+2. {{"word"}, 1}, "noadd" - "word"
+3. {{"a", "b", "c", "d", "e", "f"}, 6}, "" - "abcdef"
+4. {{"a", "b", "c", "d", "e", "f"}, 6}, "x" - "axbxcxdxexf"
+5. {{"Hello", "Hello", "Hello", "is", "there", "anybody", "in", "there", "?"}, 9}, " " = "Hello Hello Hello is there anybody in there ?"
+
+find_and_replace_all_m(no string will be NULL) # Change this name to include the _m in the header file please
+1. "", "", "" - ""
+2. "abc", "z", "y" - "abc"
+3. "aaa", "a", "" - ""
+4. "aaa", "a", "b" - "bbb"
+5. "aaa", "a", "xyz" - "xyzxyzxyz"
+6. "mississippi", "issip", "gotcha?" - "missgotcha?pi"
+*/
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <test_num>", argv[0]);
+        return EXIT_FAILURE;
     }
 
-    // First pass: count lines
-    size_t total_lines = 0;
-    char buffer[1024];
-    while (fgets(buffer, sizeof(buffer), file)) {
-        total_lines++;
+    // get desired test number, -1 = all tests
+    const int test_num = atoi(argv[1]);
+    if(test_num == 0) {
+        fprintf(stderr, "Error, invalid test number. Must be an integer and non-zero.\n");
     }
+    // define test functions
+    int (*mu_test_functions[])() = 
+                            { 
+                            test1, 
+                            test2,
+                            test3,
+                            };
 
-    if (total_lines < 1) {
-        fclose(file);
-        return -1; 
-    }
+    const int num_tests = sizeof(mu_test_functions) / sizeof(*mu_test_functions);
 
-    // Allocate memory for strings array
-    *count = total_lines - 1;  // Exclude separator line
-    char** temp_strings = malloc(sizeof(char*) * (*count));
-    if (!temp_strings) {
-        fclose(file);
-        return -1;
-    }
-
-    // Reset file position
-    rewind(file);
-
-    // Second pass: read strings
-    for (size_t i = 0; i < *count; i++) {
-        if (!fgets(buffer, sizeof(buffer), file)) {
-            // Error reading file
-            for (size_t j = 0; j < i; j++) {
-                free(temp_strings[j]);
-            }
-            free(temp_strings);
-            fclose(file);
-            return -1;
+    if(test_num == -1) {
+        for(int i = 0; i < num_tests; i++) {
+            mu_run(mu_test_functions[i], i+1);
         }
-
-        // Remove newline if present
-        size_t len = strlen(buffer);
-        if (len > 0 && buffer[len-1] == '\n') {
-            buffer[len-1] = '\0';
-            len--;
-        }
-
-        // Allocate and copy string
-        temp_strings[i] = malloc(len + 1);
-        if (!temp_strings[i]) {
-            for (size_t j = 0; j < i; j++) {
-                free(temp_strings[j]);
-            }
-            free(temp_strings);
-            fclose(file);
-            return -1;
-        }
-        strcpy(temp_strings[i], buffer);
     }
-
-    // Read separator (last line)
-    if (!fgets(buffer, sizeof(buffer), file)) {
-        for (size_t i = 0; i < *count; i++) {
-            free(temp_strings[i]);
-        }
-        free(temp_strings);
-        fclose(file);
-        return -1;
+    else if(test_num > 0 && test_num <= num_tests) {
+        mu_run(mu_test_functions[test_num - 1], test_num);
     }
-
-    // Remove newline from separator if present
-    size_t len = strlen(buffer);
-    if (len > 0 && buffer[len-1] == '\n') {
-        buffer[len-1] = '\0';
-        len--;
+    else {
+        fprintf(stderr, "Please enter a valid test number (-1 for all, or in range 1 to %d\n", num_tests);
     }
-
-    // Allocate and copy separator
-    *separator = malloc(len + 1);
-    if (!*separator) {
-        for (size_t i = 0; i < *count; i++) {
-            free(temp_strings[i]);
-        }
-        free(temp_strings);
-        fclose(file);
-        return -1;
-    }
-    strcpy((char*)*separator, buffer);
-
-    *strings = (const char* const*)temp_strings;
-    fclose(file);
-    return 0;
-}
-
-static void free_strings(const char* const* strings, size_t count, const char* separator) {
-    for (size_t i = 0; i < count; i++) {
-        free((void*)strings[i]);
-    }
-    free((void*)strings);
-    free((void*)separator);
+    return EXIT_SUCCESS;
 }

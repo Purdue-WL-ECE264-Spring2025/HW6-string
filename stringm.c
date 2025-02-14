@@ -12,7 +12,7 @@
 ** return the size of the string
 */
 size_t strlen_m(const char *string) {
-
+    return 0;
 }
 
 /*
@@ -21,7 +21,7 @@ size_t strlen_m(const char *string) {
 ** size_t n - number of characters to copy (not including null character)
 ** return a copy of first n characters of string
 */
-char * strncpy_m(const char *string, size_t n) {
+char *strncpy_m(const char *string, size_t n) {
 
 }
 
@@ -41,7 +41,7 @@ Strings split_m(const char *string, const char *pattern) {
 ** const char *delimiter - delimiter string which joins each string
 ** return the joined string
 */
-char * join_m(Strings strings, const char *delimiter) {
+char *join_m(Strings strings, const char *delimiter) {
 
 }
 
@@ -52,12 +52,12 @@ char * join_m(Strings strings, const char *delimiter) {
 ** const char *replacement - replacement string for each occurence of pattern in string
 ** return a 
 */
-char * find_and_replace_all(const char *string, const char *pattern, const char *replacement) {
+char *find_and_replace_all(const char *string, const char *pattern, const char *replacement) {
 
 }
 
 /*
-** This function is implemented for you -- do not modify
+** this function is implemented for you to use -- do not modify
 */
 const char *strstr_m(const char *haystack, const char *needle)
 {
